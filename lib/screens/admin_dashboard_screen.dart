@@ -193,7 +193,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> with Single
             ),
             child: Wrap(
               alignment: WrapAlignment.spaceBetween,
-              crossAlignment: WrapCrossAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
               spacing: 16,
               runSpacing: 16,
               children: [
@@ -424,7 +424,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> with Single
           children: [
             Wrap(
               alignment: WrapAlignment.spaceBetween,
-              crossAlignment: WrapCrossAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
               spacing: 16,
               runSpacing: 16,
               children: [
@@ -438,7 +438,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> with Single
                 Wrap(
                   spacing: 8,
                   runSpacing: 8,
-                  crossAlignment: WrapCrossAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     if (provider.products.isNotEmpty)
                       OutlinedButton.icon(

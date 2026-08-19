@@ -28,7 +28,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
             // Top Bar
             Wrap(
               alignment: WrapAlignment.spaceBetween,
-              crossAlignment: WrapCrossAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
               spacing: 16,
               runSpacing: 16,
               children: [
