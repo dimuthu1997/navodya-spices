@@ -197,34 +197,44 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> with Single
               spacing: 16,
               runSpacing: 16,
               children: [
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ClipOval(
-                      child: Image.asset(
-                        'assets/images/logo.png',
-                        width: 65,
-                        height: 65,
-                        fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => const Icon(Icons.dry_cleaning, size: 50, color: AppTheme.royalGoldPrimary),
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 280),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ClipOval(
+                        child: Image.asset(
+                          'assets/images/logo.png',
+                          width: 55,
+                          height: 55,
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) => const Icon(Icons.dry_cleaning, size: 40, color: AppTheme.royalGoldPrimary),
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 16),
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Navodya Spices Executive Panel',
-                          style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                      const SizedBox(width: 12),
+                      const Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                'Navodya Spices Executive Panel',
+                                style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            SizedBox(height: 2),
+                            Text(
+                              'නාවෝද්‍යා කුළුබඩු • Royal Golden Elephant Portal',
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(color: Colors.white70, fontSize: 11),
+                            ),
+                          ],
                         ),
-                        SizedBox(height: 4),
-                        Text(
-                          'නාවෝද්‍යා කුළුබඩු • Royal Golden Elephant Portal',
-                          style: TextStyle(color: Colors.white70, fontSize: 12),
-                        ),
-                      ],
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
@@ -232,7 +242,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> with Single
                     foregroundColor: AppTheme.royalGoldPrimary,
                   ),
                   onPressed: () => _downloadCsv(context, provider),
-                  icon: const Icon(Icons.download),
+                  icon: const Icon(Icons.download, size: 18),
                   label: const Text('Export Sales CSV'),
                 ),
               ],
@@ -764,7 +774,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> with Single
                 children: [
                   const Text('Report Export Center', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                   const SizedBox(height: 12),
-                  Row(
+                  Wrap(
+                    spacing: 12,
+                    runSpacing: 12,
                     children: [
                       ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(backgroundColor: AppTheme.cardamomGreen),
@@ -772,7 +784,6 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> with Single
                         icon: const Icon(Icons.table_chart, color: Colors.white),
                         label: const Text('Download CSV Sales Report', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                       ),
-                      const SizedBox(width: 16),
                       OutlinedButton.icon(
                         onPressed: () {
                           NotificationService.showInAppAlert(
