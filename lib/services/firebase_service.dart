@@ -348,7 +348,7 @@ class FirebaseService {
         price: 170.0,
         unit: '100g',
         stock: 280,
-        imageUrl: 'https://raw.githubusercontent.com/dimuthud2017/navodya-spices/main/assets/images/chili_flakes.jpg',
+        imageUrl: 'https://raw.githubusercontent.com/dimuthu1997/navodya-spices/main/assets/images/chili_flakes.jpg',
         description: 'Coarsely crushed sun-dried red chili flakes for kottu, fried rice, and tempering.',
         rating: 4.8,
         isPopular: true,
