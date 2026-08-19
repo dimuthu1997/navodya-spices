@@ -564,7 +564,7 @@ class FirebaseService {
         id: 'BAN-101',
         title: 'Ceylon Avurudu Spice Festival',
         subtitle: 'Get 15% OFF on pure authentic Sri Lankan Spices with Code AVURUDU15',
-        imageUrl: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=1000',
+        imageUrl: 'https://raw.githubusercontent.com/dimuthu1997/navodya-spices/main/assets/images/navodya_hero_banner.jpg',
         discountCode: 'AVURUDU15',
         buttonText: 'SHOP NOW',
         isActive: true,
