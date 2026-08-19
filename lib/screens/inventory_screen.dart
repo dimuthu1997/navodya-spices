@@ -26,17 +26,22 @@ class _InventoryScreenState extends State<InventoryScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Top Bar
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Wrap(
+              alignment: WrapAlignment.spaceBetween,
+              crossAlignment: WrapCrossAlignment.center,
+              spacing: 16,
+              runSpacing: 16,
               children: [
                 const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Spice Inventory & QR Cards', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-                    Text('Manage products stock, prices and print package QR tags', style: TextStyle(color: Colors.grey, fontSize: 13)),
+                    Text('Spice Inventory & QR Cards', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    Text('Manage products stock, prices and print package QR tags', style: TextStyle(color: Colors.grey, fontSize: 12)),
                   ],
                 ),
-                Row(
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
                   children: [
                     OutlinedButton.icon(
                       style: OutlinedButton.styleFrom(side: const BorderSide(color: AppTheme.royalGoldPrimary)),
@@ -54,7 +59,6 @@ class _InventoryScreenState extends State<InventoryScreen> {
                       icon: const Icon(Icons.cloud_upload_outlined, color: AppTheme.royalGoldPrimary, size: 16),
                       label: const Text('Seed Firebase DB', style: TextStyle(color: AppTheme.royalGoldPrimary, fontWeight: FontWeight.bold)),
                     ),
-                    const SizedBox(width: 8),
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(backgroundColor: AppTheme.saffronPrimary),
                       onPressed: () => _showAddEditSpiceDialog(context, appProvider),

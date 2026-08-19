@@ -191,33 +191,40 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> with Single
                 )
               ],
             ),
-            child: Row(
+            child: Wrap(
+              alignment: WrapAlignment.spaceBetween,
+              crossAlignment: WrapCrossAlignment.center,
+              spacing: 16,
+              runSpacing: 16,
               children: [
-                ClipOval(
-                  child: Image.asset(
-                    'assets/images/logo.png',
-                    width: 75,
-                    height: 75,
-                    fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => const Icon(Icons.dry_cleaning, size: 50, color: AppTheme.royalGoldPrimary),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                const Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Navodya Spices Executive Panel',
-                        style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ClipOval(
+                      child: Image.asset(
+                        'assets/images/logo.png',
+                        width: 65,
+                        height: 65,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) => const Icon(Icons.dry_cleaning, size: 50, color: AppTheme.royalGoldPrimary),
                       ),
-                      SizedBox(height: 4),
-                      Text(
-                        'නාවෝද්‍යා කුළුබඩු • Royal Golden Elephant Brand Portal • WHATSAPP: 0702308303',
-                        style: TextStyle(color: Colors.white70, fontSize: 12),
-                      ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(width: 16),
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Navodya Spices Executive Panel',
+                          style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 4),
+                        Text(
+                          'නාවෝද්‍යා කුළුබඩු • Royal Golden Elephant Portal',
+                          style: TextStyle(color: Colors.white70, fontSize: 12),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
@@ -415,8 +422,11 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> with Single
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Wrap(
+              alignment: WrapAlignment.spaceBetween,
+              crossAlignment: WrapCrossAlignment.center,
+              spacing: 16,
+              runSpacing: 16,
               children: [
                 const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -425,7 +435,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> with Single
                     Text('Edit images, descriptions, prices, units, and stock quantities in real time.', style: TextStyle(color: Colors.grey, fontSize: 12)),
                   ],
                 ),
-                Row(
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  crossAlignment: WrapCrossAlignment.center,
                   children: [
                     if (provider.products.isNotEmpty)
                       OutlinedButton.icon(
@@ -434,7 +447,6 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> with Single
                         icon: const Icon(Icons.delete_sweep, size: 16),
                         label: const Text('Clear Sample Spices'),
                       ),
-                    const SizedBox(width: 8),
                     Chip(
                       label: Text('${provider.products.length} Spices'),
                       backgroundColor: AppTheme.royalGoldPrimary.withValues(alpha: 0.15),

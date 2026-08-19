@@ -62,7 +62,7 @@ class _SalesHistoryScreenState extends State<SalesHistoryScreen> {
                   physics: const NeverScrollableScrollPhysics(),
                   crossAxisSpacing: 16,
                   mainAxisSpacing: 16,
-                  childAspectRatio: isWide ? 1.8 : 1.4,
+                  childAspectRatio: isWide ? 1.8 : 1.1,
                   children: [
                     _buildMetricCard(
                       context,
@@ -103,21 +103,24 @@ class _SalesHistoryScreenState extends State<SalesHistoryScreen> {
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               child: Padding(
                 padding: const EdgeInsets.all(16),
-                child: Row(
+                child: Wrap(
+                  spacing: 12,
+                  runSpacing: 12,
+                  crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
-                    Expanded(
+                    SizedBox(
+                      width: 250,
                       child: TextField(
                         controller: _searchController,
                         onChanged: (_) => setState(() {}),
                         decoration: const InputDecoration(
-                          hintText: 'Search order by ID, Customer name...',
+                          hintText: 'Search order by ID, Customer...',
                           prefixIcon: Icon(Icons.search),
                           border: OutlineInputBorder(),
                           isDense: true,
                         ),
                       ),
                     ),
-                    const SizedBox(width: 16),
                     DropdownButton<String>(
                       value: _paymentFilter,
                       items: ['All', 'Cash on Delivery', 'Card Direct', 'Bank Transfer', 'WhatsApp Direct', 'QR Payment']
@@ -148,9 +151,12 @@ class _SalesHistoryScreenState extends State<SalesHistoryScreen> {
                       child: Center(
                         child: Column(
                           children: [
-                            Icon(Icons.history_toggle_off, size: 64, color: Colors.grey.shade400),
-                            const SizedBox(height: 12),
-                            const Text('No sales records match criteria.'),
+                            Icon(Icons.receipt_long_outlined, size: 64, color: Colors.grey.shade400),
+                            const SizedBox(height: 16),
+                            const Text(
+                              'No Order Records Found',
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
                           ],
                         ),
                       ),
@@ -167,21 +173,17 @@ class _SalesHistoryScreenState extends State<SalesHistoryScreen> {
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                         child: ExpansionTile(
                           leading: CircleAvatar(
-                            backgroundColor: order.paymentMethod == 'QR Payment'
-                                ? Colors.blue.withValues(alpha: 0.1)
-                                : AppTheme.saffronPrimary.withValues(alpha: 0.1),
-                            child: Icon(
-                              order.paymentMethod == 'QR Payment' ? Icons.qr_code : Icons.receipt,
-                              color: order.paymentMethod == 'QR Payment' ? Colors.blue : AppTheme.saffronPrimary,
-                            ),
+                            backgroundColor: AppTheme.royalGoldPrimary.withValues(alpha: 0.15),
+                            child: const Icon(Icons.receipt, color: AppTheme.royalGoldPrimary),
                           ),
-                          title: Row(
+                          title: Wrap(
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            spacing: 8,
                             children: [
                               Text(
                                 order.id,
                                 style: const TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              const SizedBox(width: 10),
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                                 decoration: BoxDecoration(
@@ -200,15 +202,18 @@ class _SalesHistoryScreenState extends State<SalesHistoryScreen> {
                             ],
                           ),
                           subtitle: Text(
-                            '${dateFormatter.format(order.createdAt)} • ${order.paymentMethod} ${order.customerName != null ? "• ${order.customerName}" : ""}',
-                            style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+                            '${dateFormatter.format(order.createdAt)} • ${order.paymentMethod}',
+                            style: TextStyle(fontSize: 11, color: Colors.grey.shade600),
                           ),
-                          trailing: Text(
-                            currencyFormatter.format(order.totalAmount),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              color: AppTheme.saffronPrimary,
+                          trailing: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              currencyFormatter.format(order.totalAmount),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                                color: AppTheme.saffronPrimary,
+                              ),
                             ),
                           ),
                           children: [

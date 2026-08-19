@@ -317,7 +317,7 @@ class OnlineStorefrontScreen extends StatelessWidget {
                   itemCount: appProvider.filteredProducts.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: isDesktop ? 4 : (screenWidth >= 600 ? 3 : 2),
-                    childAspectRatio: isDesktop ? 0.92 : (screenWidth >= 600 ? 0.84 : 0.76),
+                    childAspectRatio: isDesktop ? 0.88 : (screenWidth >= 600 ? 0.76 : 0.64),
                     crossAxisSpacing: 16,
                     mainAxisSpacing: 16,
                   ),

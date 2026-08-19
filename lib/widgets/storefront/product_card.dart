@@ -69,7 +69,7 @@ class ProductCard extends StatelessWidget {
                   ),
                   child: Image.network(
                     spice.imageUrl,
-                    height: 145,
+                    height: 130,
                     width: double.infinity,
                     fit: BoxFit.cover,
                     errorBuilder: (_, __, ___) => _buildFallbackImage(),
@@ -325,7 +325,7 @@ class ProductCard extends StatelessWidget {
 
   Widget _buildFallbackImage() {
     return Container(
-      height: 145,
+      height: 130,
       color: AppTheme.royalGoldPrimary.withValues(alpha: 0.1),
       child: const Center(
         child: Icon(
