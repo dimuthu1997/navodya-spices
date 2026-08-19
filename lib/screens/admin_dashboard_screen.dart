@@ -61,41 +61,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> with Single
     }
   }
 
-  void _confirmClearDummyData(BuildContext context, AppProvider provider) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Row(
-          children: [
-            Icon(Icons.warning_amber_rounded, color: Colors.red),
-            SizedBox(width: 8),
-            Text('Clear All Dummy Data?'),
-          ],
-        ),
-        content: const Text(
-          'This will remove all sample spices, banners, and sample orders so you can add your own real products from scratch.',
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-            onPressed: () {
-              provider.clearSampleData();
-              Navigator.pop(ctx);
-              NotificationService.showInAppAlert(
-                context,
-                title: 'Sample Data Cleared',
-                message: 'You can now add your real spice catalog, prices, and banners.',
-                icon: Icons.delete_sweep,
-                color: Colors.orange,
-              );
-            },
-            child: const Text('Clear All Dummy Data', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-          ),
-        ],
-      ),
-    );
-  }
+
 
   // Web File Picker helper converting selected local image (JPG/PNG) to Data URL
   void _pickLocalImageFile(Function(String) onLoaded) {
@@ -297,18 +263,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> with Single
           const SizedBox(height: 24),
 
           // Quick Action Cards
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text('Admin Quick Actions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              OutlinedButton.icon(
-                style: OutlinedButton.styleFrom(foregroundColor: Colors.red),
-                onPressed: () => _confirmClearDummyData(context, provider),
-                icon: const Icon(Icons.delete_sweep),
-                label: const Text('Clear All Sample Data'),
-              ),
-            ],
-          ),
+          const Text('Admin Quick Actions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 12),
 
           Row(
@@ -445,23 +400,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> with Single
                     Text('Edit images, descriptions, prices, units, and stock quantities in real time.', style: TextStyle(color: Colors.grey, fontSize: 12)),
                   ],
                 ),
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    if (provider.products.isNotEmpty)
-                      OutlinedButton.icon(
-                        style: OutlinedButton.styleFrom(foregroundColor: Colors.red),
-                        onPressed: () => _confirmClearDummyData(context, provider),
-                        icon: const Icon(Icons.delete_sweep, size: 16),
-                        label: const Text('Clear Sample Spices'),
-                      ),
-                    Chip(
-                      label: Text('${provider.products.length} Spices'),
-                      backgroundColor: AppTheme.royalGoldPrimary.withValues(alpha: 0.15),
-                    ),
-                  ],
+                Chip(
+                  label: Text('${provider.products.length} Spices'),
+                  backgroundColor: AppTheme.royalGoldPrimary.withValues(alpha: 0.15),
                 ),
               ],
             ),
