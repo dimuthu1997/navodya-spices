@@ -69,10 +69,10 @@ class ProductCard extends StatelessWidget {
                   ),
                   child: Image.network(
                     spice.imageUrl,
-                    height: 130,
+                    height: MediaQuery.of(context).size.width >= 1100 ? 145 : 125,
                     width: double.infinity,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => _buildFallbackImage(),
+                    errorBuilder: (_, __, ___) => _buildFallbackImage(context),
                   ),
                 ),
 
@@ -328,9 +328,10 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-  Widget _buildFallbackImage() {
+  Widget _buildFallbackImage(BuildContext context) {
+    final height = MediaQuery.of(context).size.width >= 1100 ? 145.0 : 125.0;
     return Container(
-      height: 130,
+      height: height,
       color: AppTheme.royalGoldPrimary.withValues(alpha: 0.1),
       child: const Center(
         child: Icon(

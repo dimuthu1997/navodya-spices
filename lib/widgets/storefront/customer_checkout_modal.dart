@@ -281,35 +281,98 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                     // Guest Login Required Banner
                     if (!provider.isLoggedIn)
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                        margin: const EdgeInsets.only(bottom: 14),
+                        padding: const EdgeInsets.all(14),
+                        margin: const EdgeInsets.only(bottom: 16),
                         decoration: BoxDecoration(
-                          color: AppTheme.royalGoldPrimary.withValues(alpha: 0.12),
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: AppTheme.royalGoldPrimary.withValues(alpha: 0.3)),
+                          color: AppTheme.royalGoldPrimary.withValues(alpha: 0.08),
+                          borderRadius: BorderRadius.circular(18),
+                          border: Border.all(color: AppTheme.royalGoldPrimary.withValues(alpha: 0.35), width: 1.5),
                         ),
-                        child: Row(
-                          children: [
-                            const Icon(Icons.lock_outline, color: AppTheme.royalGoldPrimary, size: 20),
-                            const SizedBox(width: 10),
-                            const Expanded(
-                              child: Text(
-                                '🔒 Customer login is required to complete order and track live delivery status.',
-                                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            ElevatedButton.icon(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppTheme.royalGoldPrimary,
-                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                minimumSize: Size.zero,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                              ),
-                              onPressed: () => _showLoginSheet(context),
-                              icon: const Icon(Icons.login, color: Colors.white, size: 14),
-                              label: const Text('LOG IN', style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold)),
-                            ),
-                          ],
+                        child: LayoutBuilder(
+                          builder: (context, constraints) {
+                            final isNarrow = constraints.maxWidth < 360;
+                            if (isNarrow) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  const Row(
+                                    children: [
+                                      Icon(Icons.lock_outline_rounded, color: AppTheme.royalGoldPrimary, size: 20),
+                                      SizedBox(width: 8),
+                                      Expanded(
+                                        child: Text(
+                                          'Customer login required to place order.',
+                                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 10),
+                                  ElevatedButton.icon(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppTheme.royalGoldPrimary,
+                                      foregroundColor: Colors.white,
+                                      padding: const EdgeInsets.symmetric(vertical: 12),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                      elevation: 2,
+                                    ),
+                                    onPressed: () => _showLoginSheet(context),
+                                    icon: const Icon(Icons.login_rounded, color: Colors.white, size: 18),
+                                    label: const Text(
+                                      'LOG IN / SIGN IN',
+                                      style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold, letterSpacing: 0.5),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            }
+
+                            return Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    color: AppTheme.royalGoldPrimary.withValues(alpha: 0.15),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: const Icon(Icons.lock_outline_rounded, color: AppTheme.royalGoldPrimary, size: 20),
+                                ),
+                                const SizedBox(width: 12),
+                                const Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Login Required',
+                                        style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.bold, color: AppTheme.royalGoldPrimary),
+                                      ),
+                                      SizedBox(height: 2),
+                                      Text(
+                                        'Customer login required to complete order & track delivery',
+                                        style: TextStyle(fontSize: 11.5, color: Colors.black87),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                ElevatedButton.icon(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: AppTheme.royalGoldPrimary,
+                                    foregroundColor: Colors.white,
+                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                    elevation: 2,
+                                  ),
+                                  onPressed: () => _showLoginSheet(context),
+                                  icon: const Icon(Icons.login_rounded, color: Colors.white, size: 18),
+                                  label: const Text(
+                                    'LOG IN',
+                                    style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold, letterSpacing: 0.5),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
                         ),
                       ),
 

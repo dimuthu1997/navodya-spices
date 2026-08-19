@@ -316,8 +316,14 @@ class OnlineStorefrontScreen extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: appProvider.filteredProducts.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: isDesktop ? 4 : (screenWidth >= 600 ? 3 : 2),
-                    childAspectRatio: isDesktop ? 0.88 : (screenWidth >= 600 ? 0.76 : 0.64),
+                    crossAxisCount: screenWidth >= 1200 ? 4 : (screenWidth >= 700 ? 3 : 2),
+                    childAspectRatio: screenWidth >= 1400
+                        ? 1.25
+                        : (screenWidth >= 1100
+                            ? 1.15
+                            : (screenWidth >= 700
+                                ? 0.85
+                                : 0.65)),
                     crossAxisSpacing: 16,
                     mainAxisSpacing: 16,
                   ),
