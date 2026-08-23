@@ -86,6 +86,7 @@ class _PosTerminalScreenState extends State<PosTerminalScreen> {
                             return Padding(
                               padding: const EdgeInsets.only(right: 8),
                               child: FilterChip(
+                                showCheckmark: false,
                                 label: Text(cat),
                                 selected: isSelected,
                                 selectedColor: AppTheme.saffronPrimary,
@@ -456,6 +457,7 @@ class _PosTerminalScreenState extends State<PosTerminalScreen> {
                       children: [0.0, 5.0, 10.0, 15.0].map((pct) {
                         final isSel = provider.discountPercent == pct;
                         return ChoiceChip(
+                          showCheckmark: false,
                           label: Text('${pct.toInt()}%'),
                           selected: isSel,
                           selectedColor: AppTheme.turmericGold,

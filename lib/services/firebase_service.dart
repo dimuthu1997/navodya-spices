@@ -562,7 +562,7 @@ class FirebaseService {
     final defaultBanners = [
       BannerModel(
         id: 'BAN-101',
-        title: 'Ceylon Avurudu Spice Festival',
+        title: 'Avurudu Spice Festival',
         subtitle: 'Get 15% OFF on pure authentic Sri Lankan Spices with Code AVURUDU15',
         imageUrl: 'https://raw.githubusercontent.com/dimuthu1997/navodya-spices/main/assets/images/navodya_hero_banner.jpg',
         discountCode: 'AVURUDU15',

@@ -241,6 +241,7 @@ class _CustomerOrderHistoryScreenState extends State<CustomerOrderHistoryScreen>
                           return Padding(
                             padding: const EdgeInsets.only(right: 8),
                             child: ChoiceChip(
+                              showCheckmark: false,
                               label: Text(status),
                               selected: isSelected,
                               onSelected: (_) => setState(() => _selectedStatusFilter = status),

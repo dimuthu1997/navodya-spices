@@ -235,6 +235,7 @@ class OnlineStorefrontScreen extends StatelessWidget {
                   return Padding(
                     padding: const EdgeInsets.only(right: 8),
                     child: ChoiceChip(
+                      showCheckmark: false,
                       label: Text(cat),
                       selected: isSelected,
                       onSelected: (_) => appProvider.setCategory(cat),
