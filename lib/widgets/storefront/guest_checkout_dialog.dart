@@ -18,7 +18,7 @@ class _GuestCheckoutDialogState extends State<GuestCheckoutDialog> {
   final TextEditingController _cityController = TextEditingController();
   final TextEditingController _couponController = TextEditingController();
 
-  String _paymentMethod = 'Cash on Delivery';
+  String _paymentMethod = 'WhatsApp Direct';
   String _errorMessage = '';
   String _couponSuccessMessage = '';
   bool _isSubmitting = false;
@@ -225,6 +225,7 @@ class _GuestCheckoutDialogState extends State<GuestCheckoutDialog> {
               const SizedBox(height: 8),
               Column(
                 children: [
+                  /*
                   RadioListTile<String>(
                     title: const Text('Cash on Delivery (COD)'),
                     subtitle: const Text('Pay cash upon islandwide delivery'),
@@ -239,6 +240,7 @@ class _GuestCheckoutDialogState extends State<GuestCheckoutDialog> {
                     groupValue: _paymentMethod,
                     onChanged: (val) => setState(() => _paymentMethod = val!),
                   ),
+                  */
                   RadioListTile<String>(
                     title: const Text('WhatsApp Order Dispatch'),
                     subtitle: const Text('Send cart directly to WhatsApp 0702308303'),
@@ -278,6 +280,8 @@ class _GuestCheckoutDialogState extends State<GuestCheckoutDialog> {
                       ),
                     ],
                     const SizedBox(height: 4),
+                    /*
+                    // Temporarily commented out delivery fee cost row
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -288,6 +292,7 @@ class _GuestCheckoutDialogState extends State<GuestCheckoutDialog> {
                         ),
                       ],
                     ),
+                    */
                     const Divider(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

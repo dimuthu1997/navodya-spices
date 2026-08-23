@@ -489,7 +489,8 @@ class AppProvider with ChangeNotifier {
 
   double get subtotal => _cart.fold(0.0, (sum, item) => sum + item.itemTotal);
   double get discountAmount => subtotal * (_discountPercent / 100);
-  double get deliveryFee => (subtotal >= _freeShippingThreshold || _cart.isEmpty) ? 0.0 : _standardDeliveryFee;
+  // double get deliveryFee => (subtotal >= _freeShippingThreshold || _cart.isEmpty) ? 0.0 : _standardDeliveryFee;
+  double get deliveryFee => 0.0; // Temporarily commented out Rs. 350 delivery fee
   double get grandTotal => (subtotal - discountAmount + deliveryFee).clamp(0.0, double.infinity);
 
   // Auto Dispatch Order details to WhatsApp

@@ -22,7 +22,7 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
   final TextEditingController _notesController = TextEditingController();
   final TextEditingController _couponController = TextEditingController();
 
-  String _paymentMethod = 'Cash on Delivery';
+  String _paymentMethod = 'WhatsApp Direct';
   String _errorMessage = '';
   String _couponSuccessMessage = '';
   bool _isSubmitting = false;
@@ -236,7 +236,7 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
     final provider = Provider.of<AppProvider>(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final currencyFormatter = NumberFormat.currency(symbol: 'Rs. ', decimalDigits: 2);
-    final remainingForFreeDelivery = (provider.freeShippingThreshold - provider.subtotal).clamp(0.0, double.infinity);
+    // final remainingForFreeDelivery = (provider.freeShippingThreshold - provider.subtotal).clamp(0.0, double.infinity);
 
     if (provider.currentUser != null) {
       if (_nameController.text.isEmpty) _nameController.text = provider.currentUser!.name;
@@ -683,6 +683,8 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                       ),
                       child: Column(
                         children: [
+                          /*
+                          // Temporarily disabled other payment methods
                           RadioListTile<String>(
                             title: const Row(
                               children: [
@@ -725,6 +727,7 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                             onChanged: (val) => setState(() => _paymentMethod = val!),
                           ),
                           const Divider(height: 1),
+                          */
                           RadioListTile<String>(
                             title: const Row(
                               children: [
@@ -777,6 +780,8 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                             ),
                           ],
                           const SizedBox(height: 6),
+                          /*
+                          // Temporarily commented out delivery fee cost row
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -809,6 +814,7 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                               ),
                             ),
                           ],
+                          */
 
                           const Divider(height: 20),
                           Row(
