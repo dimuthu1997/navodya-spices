@@ -320,6 +320,33 @@ class AppProvider with ChangeNotifier {
         _saveUserSession(user);
         return true;
       }
+
+      // Hardcoded fallback for default accounts
+      if (cleanPin == '0468') {
+        final adminUser = AppUser(
+          id: 'USR-ADMIN',
+          name: 'Store Owner (Admin)',
+          email: 'admin@navodyaspices.lk',
+          pin: '0468',
+          role: UserRole.admin,
+          authProvider: 'firebase',
+        );
+        _currentNavIndex = 4;
+        _saveUserSession(adminUser);
+        return true;
+      } else if (cleanPin == '9710') {
+        final cashierUser = AppUser(
+          id: 'USR-CASHIER',
+          name: 'POS Staff (Cashier)',
+          email: 'cashier@navodyaspices.lk',
+          pin: '9710',
+          role: UserRole.cashier,
+          authProvider: 'firebase',
+        );
+        _currentNavIndex = 1;
+        _saveUserSession(cashierUser);
+        return true;
+      }
     } catch (e) {
       debugPrint("Login with PIN note: $e");
     }
@@ -358,6 +385,19 @@ class AppProvider with ChangeNotifier {
       if (match.isNotEmpty) {
         _currentNavIndex = 4;
         _saveUserSession(match.first);
+        return true;
+      }
+      if (cleanPin == '0468') {
+        final adminUser = AppUser(
+          id: 'USR-ADMIN',
+          name: 'Store Owner (Admin)',
+          email: 'admin@navodyaspices.lk',
+          pin: '0468',
+          role: UserRole.admin,
+          authProvider: 'firebase',
+        );
+        _currentNavIndex = 4;
+        _saveUserSession(adminUser);
         return true;
       }
     } catch (e) {

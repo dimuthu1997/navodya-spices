@@ -23,7 +23,10 @@ class OnlineStorefrontScreen extends StatelessWidget {
     final isDesktop = screenWidth >= 900;
     final isMobile = screenWidth < 600;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final currencyFormatter = NumberFormat.currency(symbol: 'Rs. ', decimalDigits: 2);
+    final currencyFormatter = NumberFormat.currency(
+      symbol: 'Rs. ',
+      decimalDigits: 2,
+    );
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -57,10 +60,19 @@ class OnlineStorefrontScreen extends StatelessWidget {
                         errorBuilder: (_, __, ___) => Container(
                           decoration: const BoxDecoration(
                             gradient: LinearGradient(
-                              colors: [AppTheme.royalGoldPrimary, AppTheme.royalGoldAccent],
+                              colors: [
+                                AppTheme.royalGoldPrimary,
+                                AppTheme.royalGoldAccent,
+                              ],
                             ),
                           ),
-                          child: const Center(child: Icon(Icons.workspace_premium, size: 80, color: Colors.white)),
+                          child: const Center(
+                            child: Icon(
+                              Icons.workspace_premium,
+                              size: 80,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
                       Container(
@@ -82,14 +94,21 @@ class OnlineStorefrontScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 4,
+                              ),
                               decoration: BoxDecoration(
                                 color: AppTheme.royalGoldPrimary,
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Text(
                                 'PROMO CODE: ${appProvider.banners.first.discountCode}',
-                                style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 6),
@@ -109,7 +128,10 @@ class OnlineStorefrontScreen extends StatelessWidget {
                               appProvider.banners.first.subtitle,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(color: Colors.white70, fontSize: isMobile ? 11 : 13),
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: isMobile ? 11 : 13,
+                              ),
                             ),
                           ],
                         ),
@@ -127,15 +149,25 @@ class OnlineStorefrontScreen extends StatelessWidget {
                       children: [
                         TextField(
                           onChanged: (q) => appProvider.setSearchQuery(q),
-                          style: TextStyle(color: isDark ? Colors.white : AppTheme.textDark),
+                          style: TextStyle(
+                            color: isDark ? Colors.white : AppTheme.textDark,
+                          ),
                           decoration: InputDecoration(
                             hintText: 'Search spices, Sinhala names...',
-                            hintStyle: TextStyle(color: isDark ? Colors.grey.shade400 : Colors.grey.shade600),
-                            prefixIcon: const Icon(Icons.search, color: AppTheme.royalGoldPrimary),
+                            hintStyle: TextStyle(
+                              color: isDark
+                                  ? Colors.grey.shade400
+                                  : Colors.grey.shade600,
+                            ),
+                            prefixIcon: const Icon(
+                              Icons.search,
+                              color: AppTheme.royalGoldPrimary,
+                            ),
                             suffixIcon: appProvider.searchQuery.isNotEmpty
                                 ? IconButton(
                                     icon: const Icon(Icons.clear),
-                                    onPressed: () => appProvider.setSearchQuery(''),
+                                    onPressed: () =>
+                                        appProvider.setSearchQuery(''),
                                   )
                                 : null,
                             filled: true,
@@ -144,8 +176,12 @@ class OnlineStorefrontScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(16),
                               borderSide: BorderSide(
                                 color: isDark
-                                    ? AppTheme.royalGoldPrimary.withValues(alpha: 0.3)
-                                    : AppTheme.royalGoldPrimary.withValues(alpha: 0.2),
+                                    ? AppTheme.royalGoldPrimary.withValues(
+                                        alpha: 0.3,
+                                      )
+                                    : AppTheme.royalGoldPrimary.withValues(
+                                        alpha: 0.2,
+                                      ),
                               ),
                             ),
                           ),
@@ -153,20 +189,37 @@ class OnlineStorefrontScreen extends StatelessWidget {
                         const SizedBox(height: 8),
                         Container(
                           width: double.infinity,
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 8,
+                          ),
                           decoration: BoxDecoration(
-                            color: AppTheme.cardamomGreen.withValues(alpha: 0.12),
+                            color: AppTheme.cardamomGreen.withValues(
+                              alpha: 0.12,
+                            ),
                             borderRadius: BorderRadius.circular(14),
-                            border: Border.all(color: AppTheme.cardamomGreen.withValues(alpha: 0.4)),
+                            border: Border.all(
+                              color: AppTheme.cardamomGreen.withValues(
+                                alpha: 0.4,
+                              ),
+                            ),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Icon(Icons.local_shipping_outlined, color: AppTheme.cardamomGreen, size: 16),
+                              const Icon(
+                                Icons.local_shipping_outlined,
+                                color: AppTheme.cardamomGreen,
+                                size: 16,
+                              ),
                               const SizedBox(width: 6),
                               Text(
                                 'FREE Delivery > Rs. ${appProvider.freeShippingThreshold.toInt()}',
-                                style: const TextStyle(color: AppTheme.cardamomGreen, fontWeight: FontWeight.bold, fontSize: 11),
+                                style: const TextStyle(
+                                  color: AppTheme.cardamomGreen,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 11,
+                                ),
                               ),
                             ],
                           ),
@@ -178,15 +231,26 @@ class OnlineStorefrontScreen extends StatelessWidget {
                         Expanded(
                           child: TextField(
                             onChanged: (q) => appProvider.setSearchQuery(q),
-                            style: TextStyle(color: isDark ? Colors.white : AppTheme.textDark),
+                            style: TextStyle(
+                              color: isDark ? Colors.white : AppTheme.textDark,
+                            ),
                             decoration: InputDecoration(
-                              hintText: 'Search spices, Sinhala names, categories...',
-                              hintStyle: TextStyle(color: isDark ? Colors.grey.shade400 : Colors.grey.shade600),
-                              prefixIcon: const Icon(Icons.search, color: AppTheme.royalGoldPrimary),
+                              hintText:
+                                  'Search spices, Sinhala names, categories...',
+                              hintStyle: TextStyle(
+                                color: isDark
+                                    ? Colors.grey.shade400
+                                    : Colors.grey.shade600,
+                              ),
+                              prefixIcon: const Icon(
+                                Icons.search,
+                                color: AppTheme.royalGoldPrimary,
+                              ),
                               suffixIcon: appProvider.searchQuery.isNotEmpty
                                   ? IconButton(
                                       icon: const Icon(Icons.clear),
-                                      onPressed: () => appProvider.setSearchQuery(''),
+                                      onPressed: () =>
+                                          appProvider.setSearchQuery(''),
                                     )
                                   : null,
                               filled: true,
@@ -195,8 +259,12 @@ class OnlineStorefrontScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(16),
                                 borderSide: BorderSide(
                                   color: isDark
-                                      ? AppTheme.royalGoldPrimary.withValues(alpha: 0.3)
-                                      : AppTheme.royalGoldPrimary.withValues(alpha: 0.2),
+                                      ? AppTheme.royalGoldPrimary.withValues(
+                                          alpha: 0.3,
+                                        )
+                                      : AppTheme.royalGoldPrimary.withValues(
+                                          alpha: 0.2,
+                                        ),
                                 ),
                               ),
                             ),
@@ -204,19 +272,36 @@ class OnlineStorefrontScreen extends StatelessWidget {
                         ),
                         const SizedBox(width: 12),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 14,
+                            vertical: 12,
+                          ),
                           decoration: BoxDecoration(
-                            color: AppTheme.cardamomGreen.withValues(alpha: 0.12),
+                            color: AppTheme.cardamomGreen.withValues(
+                              alpha: 0.12,
+                            ),
                             borderRadius: BorderRadius.circular(16),
-                            border: Border.all(color: AppTheme.cardamomGreen.withValues(alpha: 0.4)),
+                            border: Border.all(
+                              color: AppTheme.cardamomGreen.withValues(
+                                alpha: 0.4,
+                              ),
+                            ),
                           ),
                           child: Row(
                             children: [
-                              const Icon(Icons.local_shipping_outlined, color: AppTheme.cardamomGreen, size: 18),
+                              const Icon(
+                                Icons.local_shipping_outlined,
+                                color: AppTheme.cardamomGreen,
+                                size: 18,
+                              ),
                               const SizedBox(width: 6),
                               Text(
                                 'FREE Delivery > Rs. ${appProvider.freeShippingThreshold.toInt()}',
-                                style: const TextStyle(color: AppTheme.cardamomGreen, fontWeight: FontWeight.bold, fontSize: 12),
+                                style: const TextStyle(
+                                  color: AppTheme.cardamomGreen,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
                               ),
                             ],
                           ),
@@ -240,15 +325,25 @@ class OnlineStorefrontScreen extends StatelessWidget {
                       selected: isSelected,
                       onSelected: (_) => appProvider.setCategory(cat),
                       selectedColor: AppTheme.royalGoldPrimary,
-                      backgroundColor: isDark ? AppTheme.darkCard : Colors.white,
+                      backgroundColor: isDark
+                          ? AppTheme.darkCard
+                          : Colors.white,
                       side: BorderSide(
                         color: isSelected
                             ? AppTheme.royalGoldPrimary
-                            : (isDark ? Colors.grey.shade800 : Colors.grey.shade300),
+                            : (isDark
+                                  ? Colors.grey.shade800
+                                  : Colors.grey.shade300),
                       ),
                       labelStyle: TextStyle(
-                        color: isSelected ? Colors.white : (isDark ? Colors.grey.shade200 : AppTheme.textDark),
-                        fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                        color: isSelected
+                            ? Colors.white
+                            : (isDark
+                                  ? Colors.grey.shade200
+                                  : AppTheme.textDark),
+                        fontWeight: isSelected
+                            ? FontWeight.bold
+                            : FontWeight.w500,
                       ),
                     ),
                   );
@@ -265,45 +360,71 @@ class OnlineStorefrontScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Theme.of(context).cardColor,
                   borderRadius: BorderRadius.circular(24),
-                  border: Border.all(color: AppTheme.royalGoldPrimary.withValues(alpha: 0.15)),
+                  border: Border.all(
+                    color: AppTheme.royalGoldPrimary.withValues(alpha: 0.15),
+                  ),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.rice_bowl, size: 64, color: AppTheme.royalGoldPrimary),
+                    const Icon(
+                      Icons.rice_bowl,
+                      size: 64,
+                      color: AppTheme.royalGoldPrimary,
+                    ),
                     const SizedBox(height: 16),
                     const Text(
-                      'No Spices Found in Firestore Database',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      'No Spices Found',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Your Cloud Firestore database catalog is currently empty. Click below to load initial Sri Lankan spice catalog into Firebase.',
+                      'Your Cloud catalog is currently empty. Click below to load initial Sri Lankan spice catalog.',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.grey.shade600,
+                      ),
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppTheme.royalGoldPrimary,
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 12,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
                       ),
                       onPressed: () async {
                         await appProvider.seedFirestoreCatalog();
                         if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text('⚡ Initial Spice Catalog successfully loaded into Firebase Firestore!'),
+                              content: Text(
+                                '⚡ Initial Spice Catalog successfully loaded!',
+                              ),
                               backgroundColor: AppTheme.cardamomGreen,
                             ),
                           );
                         }
                       },
-                      icon: const Icon(Icons.cloud_upload_outlined, color: Colors.white),
+                      icon: const Icon(
+                        Icons.cloud_upload_outlined,
+                        color: Colors.white,
+                      ),
                       label: const Text(
-                        'INITIALIZE FIREBASE SPICES CATALOG',
-                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                        'INITIALIZE SPICES CATALOG',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                        ),
                       ),
                     ),
                   ],
@@ -317,27 +438,32 @@ class OnlineStorefrontScreen extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: appProvider.filteredProducts.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: screenWidth >= 1200 ? 4 : (screenWidth >= 700 ? 3 : 2),
+                    crossAxisCount: screenWidth >= 1200
+                        ? 4
+                        : (screenWidth >= 700 ? 3 : 2),
                     childAspectRatio: screenWidth >= 1400
                         ? 1.25
                         : (screenWidth >= 1100
-                            ? 1.15
-                            : (screenWidth >= 700
-                                ? 0.85
-                                : 0.65)),
+                              ? 1.15
+                              : (screenWidth >= 700 ? 0.85 : 0.65)),
                     crossAxisSpacing: 16,
                     mainAxisSpacing: 16,
                   ),
                   itemBuilder: (context, idx) {
                     final spice = appProvider.filteredProducts[idx];
-                    final cartItemIndex = appProvider.cart.indexWhere((c) => c.spice.id == spice.id);
-                    final quantityInCart = cartItemIndex >= 0 ? appProvider.cart[cartItemIndex].quantity : 0;
+                    final cartItemIndex = appProvider.cart.indexWhere(
+                      (c) => c.spice.id == spice.id,
+                    );
+                    final quantityInCart = cartItemIndex >= 0
+                        ? appProvider.cart[cartItemIndex].quantity
+                        : 0;
 
                     return ProductCard(
                       spice: spice,
                       cartQuantity: quantityInCart,
                       onAddToCart: () => appProvider.addToCart(spice),
-                      onRemoveFromCart: () => appProvider.updateCartQuantity(spice, -1),
+                      onRemoveFromCart: () =>
+                          appProvider.updateCartQuantity(spice, -1),
                     );
                   },
                 ),
@@ -369,25 +495,47 @@ class OnlineStorefrontScreen extends StatelessWidget {
                     children: [
                       Text(
                         '${appProvider.cart.length} Spices Selected',
-                        style: TextStyle(fontSize: 11, color: isDark ? Colors.grey.shade300 : Colors.grey.shade700),
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: isDark
+                              ? Colors.grey.shade300
+                              : Colors.grey.shade700,
+                        ),
                       ),
                       Text(
                         currencyFormatter.format(appProvider.grandTotal),
-                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppTheme.royalGoldPrimary),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: AppTheme.royalGoldPrimary,
+                        ),
                       ),
                     ],
                   ),
                   ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppTheme.royalGoldPrimary,
-                      padding: EdgeInsets.symmetric(horizontal: isMobile ? 12 : 20, vertical: 12),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: isMobile ? 12 : 20,
+                        vertical: 12,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
                     ),
                     onPressed: () => _showCustomerCheckoutModal(context),
-                    icon: const Icon(Icons.shopping_bag, color: Colors.white, size: 16),
+                    icon: const Icon(
+                      Icons.shopping_bag,
+                      color: Colors.white,
+                      size: 16,
+                    ),
                     label: Text(
                       isMobile ? 'CHECKOUT' : 'PROCEED TO CHECKOUT',
-                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                      ),
                     ),
                   ),
                 ],

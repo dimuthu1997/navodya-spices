@@ -243,7 +243,7 @@ class FirebaseService {
           id: 'USR-ADMIN',
           name: 'Store Owner (Admin)',
           email: 'admin@navodyaspices.lk',
-          pin: '9999',
+          pin: '0468',
           role: UserRole.admin,
           authProvider: 'firebase',
         );
@@ -251,13 +251,27 @@ class FirebaseService {
           id: 'USR-CASHIER',
           name: 'POS Staff (Cashier)',
           email: 'cashier@navodyaspices.lk',
-          pin: '1111',
+          pin: '9710',
           role: UserRole.cashier,
           authProvider: 'firebase',
         );
         await saveUser(defaultAdmin);
         await saveUser(defaultCashier);
         debugPrint("Seeded default Admin & Cashier accounts into Firestore.");
+      } else {
+        for (var doc in userSnap.docs) {
+          final data = doc.data();
+          if (doc.id == 'USR-ADMIN' || data['email'] == 'admin@navodyaspices.lk') {
+            if (data['pin'] == '9999') {
+              await FirebaseFirestore.instance.collection('users').doc(doc.id).update({'pin': '0468'});
+            }
+          }
+          if (doc.id == 'USR-CASHIER' || data['email'] == 'cashier@navodyaspices.lk') {
+            if (data['pin'] == '1111') {
+              await FirebaseFirestore.instance.collection('users').doc(doc.id).update({'pin': '9710'});
+            }
+          }
+        }
       }
 
       // 2. Seed Store Config if empty

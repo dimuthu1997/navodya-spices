@@ -48,7 +48,7 @@ class _ProductCardState extends State<ProductCard> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),
         curve: Curves.easeOutCubic,
-        transform: Matrix4.identity()..translateByDouble(0.0, _isHovered ? -6.0 : 0.0, 0.0),
+        transform: Matrix4.translationValues(0.0, _isHovered ? -6.0 : 0.0, 0.0),
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(24),

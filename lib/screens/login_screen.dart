@@ -42,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     final success = provider.loginWithPin(pin);
     if (!success) {
-      setState(() => _errorMessage = 'Invalid Staff PIN. Default Admin: 9999 | Cashier: 1111');
+      setState(() => _errorMessage = 'Invalid Staff PIN. Default Admin: 0468 | Cashier: 9710');
     } else {
       if (Navigator.canPop(context)) Navigator.pop(context);
     }
