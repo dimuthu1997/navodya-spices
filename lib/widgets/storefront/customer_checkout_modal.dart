@@ -243,31 +243,48 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
       if (_emailController.text.isEmpty) _emailController.text = provider.currentUser!.email;
     }
 
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 500;
+
     return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
+      insetPadding: EdgeInsets.symmetric(
+        horizontal: isMobile ? 12 : 24,
+        vertical: isMobile ? 16 : 24,
+      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       child: Container(
         width: 580,
         constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.9),
-        padding: const EdgeInsets.all(24),
+        padding: EdgeInsets.all(isMobile ? 14 : 24),
         child: Column(
           children: [
             // Modal Top Title Bar
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Row(
-                  children: [
-                    Icon(Icons.shopping_cart_checkout, color: AppTheme.royalGoldPrimary, size: 28),
-                    SizedBox(width: 10),
-                    Text(
-                      'Cart Checkout & Delivery',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                  ],
+                Expanded(
+                  child: Row(
+                    children: [
+                      const Icon(Icons.shopping_cart_checkout, color: AppTheme.royalGoldPrimary, size: 24),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          'Cart Checkout & Delivery',
+                          style: TextStyle(
+                            fontSize: isMobile ? 16 : 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 IconButton(
                   onPressed: () => Navigator.pop(context),
                   icon: const Icon(Icons.close),
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
                 ),
               ],
             ),
@@ -455,77 +472,104 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                         itemBuilder: (ctx, index) {
                           final item = provider.cart[index];
                           return Container(
-                            padding: const EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
                               color: isDark ? AppTheme.darkCard : Colors.grey.shade50,
                               borderRadius: BorderRadius.circular(14),
                               border: Border.all(color: Colors.grey.withValues(alpha: 0.15)),
                             ),
-                            child: Row(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.network(
-                                    item.spice.imageUrl,
-                                    width: 44,
-                                    height: 44,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (_, __, ___) => Container(
-                                      width: 44,
-                                      height: 44,
-                                      color: AppTheme.royalGoldPrimary.withValues(alpha: 0.15),
-                                      child: const Icon(Icons.rice_bowl, size: 22, color: AppTheme.royalGoldPrimary),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        item.spice.name,
-                                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-                                      ),
-                                      if (item.spice.sinhalaName.isNotEmpty)
-                                        Text(
-                                          item.spice.sinhalaName,
-                                          style: const TextStyle(fontSize: 11, color: AppTheme.royalGoldPrimary),
-                                        ),
-                                      Text(
-                                        '${currencyFormatter.format(item.unitPrice)} (${item.selectedUnit})',
-                                        style: const TextStyle(fontSize: 11, color: AppTheme.royalGoldPrimary, fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  ),
-                                ),
                                 Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    IconButton(
-                                      icon: const Icon(Icons.remove_circle_outline, size: 20),
-                                      onPressed: () => provider.updateCartQuantity(item.spice, -1, unit: item.selectedUnit),
-                                      padding: EdgeInsets.zero,
-                                      constraints: const BoxConstraints(),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                                      child: Text(
-                                        '${item.quantity}',
-                                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.network(
+                                        item.spice.imageUrl,
+                                        width: 48,
+                                        height: 48,
+                                        fit: BoxFit.cover,
+                                        errorBuilder: (_, __, ___) => Container(
+                                          width: 48,
+                                          height: 48,
+                                          color: AppTheme.royalGoldPrimary.withValues(alpha: 0.15),
+                                          child: const Icon(Icons.rice_bowl, size: 24, color: AppTheme.royalGoldPrimary),
+                                        ),
                                       ),
                                     ),
-                                    IconButton(
-                                      icon: const Icon(Icons.add_circle_outline, size: 20, color: AppTheme.royalGoldPrimary),
-                                      onPressed: () => provider.updateCartQuantity(item.spice, 1, unit: item.selectedUnit),
-                                      padding: EdgeInsets.zero,
-                                      constraints: const BoxConstraints(),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            item.spice.name,
+                                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13.5),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          if (item.spice.sinhalaName.isNotEmpty)
+                                            Text(
+                                              item.spice.sinhalaName,
+                                              style: const TextStyle(fontSize: 11.5, color: AppTheme.royalGoldPrimary, fontWeight: FontWeight.w600),
+                                            ),
+                                          const SizedBox(height: 2),
+                                          Text(
+                                            '${currencyFormatter.format(item.unitPrice)} (${item.selectedUnit})',
+                                            style: TextStyle(fontSize: 11, color: isDark ? Colors.grey.shade400 : Colors.grey.shade600),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      currencyFormatter.format(item.itemTotal),
+                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: AppTheme.royalGoldPrimary),
                                     ),
                                   ],
                                 ),
-                                const SizedBox(width: 12),
-                                Text(
-                                  currencyFormatter.format(item.itemTotal),
-                                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppTheme.royalGoldPrimary),
+                                const SizedBox(height: 10),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Quantity:',
+                                      style: TextStyle(fontSize: 11.5, color: isDark ? Colors.grey.shade400 : Colors.grey.shade600),
+                                    ),
+                                    Container(
+                                      height: 32,
+                                      decoration: BoxDecoration(
+                                        color: isDark ? Colors.grey.shade800 : Colors.grey.shade200,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          IconButton(
+                                            icon: const Icon(Icons.remove, size: 16),
+                                            onPressed: () => provider.updateCartQuantity(item.spice, -1, unit: item.selectedUnit),
+                                            padding: const EdgeInsets.symmetric(horizontal: 6),
+                                            constraints: const BoxConstraints(),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                                            child: Text(
+                                              '${item.quantity}',
+                                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                            ),
+                                          ),
+                                          IconButton(
+                                            icon: const Icon(Icons.add, size: 16, color: AppTheme.royalGoldPrimary),
+                                            onPressed: () => provider.updateCartQuantity(item.spice, 1, unit: item.selectedUnit),
+                                            padding: const EdgeInsets.symmetric(horizontal: 6),
+                                            constraints: const BoxConstraints(),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
@@ -551,65 +595,111 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            controller: _phoneController,
-                            keyboardType: TextInputType.phone,
-                            decoration: const InputDecoration(
-                              labelText: 'Phone / WhatsApp *',
-                              prefixIcon: Icon(Icons.phone_outlined),
-                              border: OutlineInputBorder(),
-                              isDense: true,
+                    if (isMobile) ...[
+                      TextField(
+                        controller: _phoneController,
+                        keyboardType: TextInputType.phone,
+                        decoration: const InputDecoration(
+                          labelText: 'Phone / WhatsApp *',
+                          prefixIcon: Icon(Icons.phone_outlined),
+                          border: OutlineInputBorder(),
+                          isDense: true,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      TextField(
+                        controller: _emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: const InputDecoration(
+                          labelText: 'Email Address (Optional)',
+                          prefixIcon: Icon(Icons.email_outlined),
+                          border: OutlineInputBorder(),
+                          isDense: true,
+                        ),
+                      ),
+                    ] else ...[
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: _phoneController,
+                              keyboardType: TextInputType.phone,
+                              decoration: const InputDecoration(
+                                labelText: 'Phone / WhatsApp *',
+                                prefixIcon: Icon(Icons.phone_outlined),
+                                border: OutlineInputBorder(),
+                                isDense: true,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: TextField(
-                            controller: _emailController,
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: const InputDecoration(
-                              labelText: 'Email Address (Optional)',
-                              prefixIcon: Icon(Icons.email_outlined),
-                              border: OutlineInputBorder(),
-                              isDense: true,
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: TextField(
+                              controller: _emailController,
+                              keyboardType: TextInputType.emailAddress,
+                              decoration: const InputDecoration(
+                                labelText: 'Email Address (Optional)',
+                                prefixIcon: Icon(Icons.email_outlined),
+                                border: OutlineInputBorder(),
+                                isDense: true,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
+                    ],
                     const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: TextField(
-                            controller: _addressController,
-                            decoration: const InputDecoration(
-                              labelText: 'Delivery Street Address *',
-                              prefixIcon: Icon(Icons.home_outlined),
-                              border: OutlineInputBorder(),
-                              isDense: true,
+                    if (isMobile) ...[
+                      TextField(
+                        controller: _addressController,
+                        decoration: const InputDecoration(
+                          labelText: 'Delivery Street Address *',
+                          prefixIcon: Icon(Icons.home_outlined),
+                          border: OutlineInputBorder(),
+                          isDense: true,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      TextField(
+                        controller: _cityController,
+                        decoration: const InputDecoration(
+                          labelText: 'City / District',
+                          prefixIcon: Icon(Icons.location_city_outlined),
+                          border: OutlineInputBorder(),
+                          isDense: true,
+                        ),
+                      ),
+                    ] else ...[
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: TextField(
+                              controller: _addressController,
+                              decoration: const InputDecoration(
+                                labelText: 'Delivery Street Address *',
+                                prefixIcon: Icon(Icons.home_outlined),
+                                border: OutlineInputBorder(),
+                                isDense: true,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          flex: 1,
-                          child: TextField(
-                            controller: _cityController,
-                            decoration: const InputDecoration(
-                              labelText: 'City / District',
-                              prefixIcon: Icon(Icons.location_city_outlined),
-                              border: OutlineInputBorder(),
-                              isDense: true,
+                          const SizedBox(width: 10),
+                          Expanded(
+                            flex: 1,
+                            child: TextField(
+                              controller: _cityController,
+                              decoration: const InputDecoration(
+                                labelText: 'City / District',
+                                prefixIcon: Icon(Icons.location_city_outlined),
+                                border: OutlineInputBorder(),
+                                isDense: true,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
+                    ],
                     const SizedBox(height: 10),
                     TextField(
                       controller: _notesController,
