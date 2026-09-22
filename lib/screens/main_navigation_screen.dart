@@ -302,7 +302,7 @@ class MainNavigationScreen extends StatelessWidget {
                         ),
                         const SizedBox(width: 6),
                         Text(
-                          isMobile ? 'Log In' : 'Log In / Register',
+                          isMobile ? 'Staff PIN' : 'Staff / Admin Login',
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 12.5,

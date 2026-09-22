@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../../providers/app_provider.dart';
 import '../../models/order_model.dart';
 import '../../theme/app_theme.dart';
-import '../../screens/login_screen.dart';
 
 class CustomerCheckoutModal extends StatefulWidget {
   const CustomerCheckoutModal({super.key});
@@ -20,11 +19,9 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _cityController = TextEditingController();
   final TextEditingController _notesController = TextEditingController();
-  final TextEditingController _couponController = TextEditingController();
 
   String _paymentMethod = 'WhatsApp Direct';
   String _errorMessage = '';
-  String _couponSuccessMessage = '';
   bool _isSubmitting = false;
 
   @override
@@ -47,48 +44,10 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
     _addressController.dispose();
     _cityController.dispose();
     _notesController.dispose();
-    _couponController.dispose();
     super.dispose();
   }
 
-  void _handleApplyCoupon(AppProvider provider, [String? directCode]) {
-    final code = directCode ?? _couponController.text.trim();
-    if (code.isEmpty) return;
-
-    _couponController.text = code;
-    final ok = provider.applyPromoCoupon(code);
-    if (ok) {
-      setState(() {
-        _couponSuccessMessage = '🎉 Coupon Applied! (${provider.appliedCouponCode})';
-        _errorMessage = '';
-      });
-    } else {
-      setState(() {
-        _errorMessage = 'Invalid Coupon Code. Valid codes: AVURUDU15, CEYLONSPICE, NAVODYA10';
-        _couponSuccessMessage = '';
-      });
-    }
-  }
-
-  void _showLoginSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (ctx) => SizedBox(
-        height: MediaQuery.of(context).size.height * 0.88,
-        child: const LoginScreen(),
-      ),
-    );
-  }
-
   void _handleCompleteOrder(AppProvider provider) async {
-    if (!provider.isLoggedIn) {
-      setState(() => _errorMessage = '🔒 Login Required: Please log in or create an account to complete your order.');
-      _showLoginSheet(context);
-      return;
-    }
-
     final name = _nameController.text.trim();
     final email = _emailController.text.trim();
     final phone = _phoneController.text.trim();
@@ -295,104 +254,6 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Guest Login Required Banner
-                    if (!provider.isLoggedIn)
-                      Container(
-                        padding: const EdgeInsets.all(14),
-                        margin: const EdgeInsets.only(bottom: 16),
-                        decoration: BoxDecoration(
-                          color: AppTheme.royalGoldPrimary.withValues(alpha: 0.08),
-                          borderRadius: BorderRadius.circular(18),
-                          border: Border.all(color: AppTheme.royalGoldPrimary.withValues(alpha: 0.35), width: 1.5),
-                        ),
-                        child: LayoutBuilder(
-                          builder: (context, constraints) {
-                            final isNarrow = constraints.maxWidth < 360;
-                            if (isNarrow) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  const Row(
-                                    children: [
-                                      Icon(Icons.lock_outline_rounded, color: AppTheme.royalGoldPrimary, size: 20),
-                                      SizedBox(width: 8),
-                                      Expanded(
-                                        child: Text(
-                                          'Customer login required to place order.',
-                                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 10),
-                                  ElevatedButton.icon(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: AppTheme.royalGoldPrimary,
-                                      foregroundColor: Colors.white,
-                                      padding: const EdgeInsets.symmetric(vertical: 12),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                                      elevation: 2,
-                                    ),
-                                    onPressed: () => _showLoginSheet(context),
-                                    icon: const Icon(Icons.login_rounded, color: Colors.white, size: 18),
-                                    label: const Text(
-                                      'LOG IN / SIGN IN',
-                                      style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold, letterSpacing: 0.5),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            }
-
-                            return Row(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                    color: AppTheme.royalGoldPrimary.withValues(alpha: 0.15),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: const Icon(Icons.lock_outline_rounded, color: AppTheme.royalGoldPrimary, size: 20),
-                                ),
-                                const SizedBox(width: 12),
-                                const Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Login Required',
-                                        style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.bold, color: AppTheme.royalGoldPrimary),
-                                      ),
-                                      SizedBox(height: 2),
-                                      Text(
-                                        'Customer login required to complete order & track delivery',
-                                        style: TextStyle(fontSize: 11.5, color: Colors.black87),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                ElevatedButton.icon(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppTheme.royalGoldPrimary,
-                                    foregroundColor: Colors.white,
-                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                                    elevation: 2,
-                                  ),
-                                  onPressed: () => _showLoginSheet(context),
-                                  icon: const Icon(Icons.login_rounded, color: Colors.white, size: 18),
-                                  label: const Text(
-                                    'LOG IN',
-                                    style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold, letterSpacing: 0.5),
-                                  ),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                      ),
-
                     // Error Banner
                     if (_errorMessage.isNotEmpty)
                       Container(
@@ -408,29 +269,6 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                             const Icon(Icons.error_outline, color: Colors.red, size: 18),
                             const SizedBox(width: 8),
                             Expanded(child: Text(_errorMessage, style: const TextStyle(color: Colors.red, fontSize: 12))),
-                          ],
-                        ),
-                      ),
-
-                    if (_couponSuccessMessage.isNotEmpty)
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        margin: const EdgeInsets.only(bottom: 12),
-                        decoration: BoxDecoration(
-                          color: AppTheme.cardamomGreen.withValues(alpha: 0.12),
-                          borderRadius: BorderRadius.circular(14),
-                          border: Border.all(color: AppTheme.cardamomGreen.withValues(alpha: 0.3)),
-                        ),
-                        child: Row(
-                          children: [
-                            const Icon(Icons.stars, color: AppTheme.cardamomGreen, size: 18),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Text(
-                                _couponSuccessMessage,
-                                style: const TextStyle(color: AppTheme.cardamomGreen, fontSize: 12, fontWeight: FontWeight.bold),
-                              ),
-                            ),
                           ],
                         ),
                       ),
@@ -709,52 +547,6 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                         border: OutlineInputBorder(),
                         isDense: true,
                       ),
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    // SECTION 3: PROMO COUPONS
-                    Text(
-                      'PROMO COUPONS & DISCOUNTS',
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: isDark ? Colors.grey.shade400 : Colors.grey.shade700),
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            controller: _couponController,
-                            decoration: const InputDecoration(
-                              hintText: 'Enter Promo Code (e.g. AVURUDU15)',
-                              border: OutlineInputBorder(),
-                              isDense: true,
-                              contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(backgroundColor: AppTheme.royalGoldPrimary),
-                          onPressed: () => _handleApplyCoupon(provider),
-                          child: const Text('APPLY', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Wrap(
-                      spacing: 8,
-                      children: [
-                        ActionChip(
-                          avatar: const Icon(Icons.local_offer, size: 14, color: AppTheme.royalGoldPrimary),
-                          label: const Text('AVURUDU15 (15% OFF)', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
-                          onPressed: () => _handleApplyCoupon(provider, 'AVURUDU15'),
-                        ),
-                        ActionChip(
-                          avatar: const Icon(Icons.local_offer, size: 14, color: AppTheme.royalGoldPrimary),
-                          label: const Text('CEYLONSPICE (10% OFF)', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
-                          onPressed: () => _handleApplyCoupon(provider, 'CEYLONSPICE'),
-                        ),
-                      ],
                     ),
 
                     const SizedBox(height: 20),
