@@ -46,11 +46,11 @@ class _InventoryScreenState extends State<InventoryScreen> {
                     OutlinedButton.icon(
                       style: OutlinedButton.styleFrom(side: const BorderSide(color: AppTheme.royalGoldPrimary)),
                       onPressed: () async {
-                        await appProvider.seedFirestoreCatalog();
+                        await appProvider.seedFirestoreCatalog(overwrite: false);
                         if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text('⚡ Firebase Firestore Catalog Synced & Seeded successfully!'),
+                              content: Text('⚡ Firestore Catalog Synced! (Existing items & price updates preserved)'),
                               backgroundColor: AppTheme.cardamomGreen,
                             ),
                           );

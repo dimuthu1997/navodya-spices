@@ -294,23 +294,23 @@ class FirebaseService {
         });
       }
 
-      // 3. Seed Default Spices Catalog if empty or legacy catalog
+      // 3. Seed Default Spices Catalog ONLY if completely empty
       final spiceSnap = await FirebaseFirestore.instance.collection('spices').get();
-      if (spiceSnap.docs.length < 10) {
-        await seedInitialSpicesCatalog();
+      if (spiceSnap.docs.isEmpty) {
+        await seedInitialSpicesCatalog(overwrite: false);
       }
 
       // 4. Seed Default Hero Banners if empty
       final bannerSnap = await FirebaseFirestore.instance.collection('banners').get();
       if (bannerSnap.docs.isEmpty) {
-        await seedInitialBanners();
+        await seedInitialBanners(overwrite: false);
       }
     } catch (e) {
       debugPrint("Firebase seed note: $e");
     }
   }
 
-  Future<void> seedInitialSpicesCatalog() async {
+  Future<void> seedInitialSpicesCatalog({bool overwrite = false}) async {
     final defaultSpices = [
       SpiceItem(
         id: 'SP-201',
@@ -566,13 +566,27 @@ class FirebaseService {
       ),
     ];
 
-    for (var spice in defaultSpices) {
-      await saveProduct(spice);
+    Set<String> existingIds = {};
+    if (!overwrite) {
+      try {
+        final existingSnap = await FirebaseFirestore.instance.collection('spices').get();
+        existingIds = existingSnap.docs.map((doc) => doc.id).toSet();
+      } catch (e) {
+        debugPrint("Error checking existing spices: $e");
+      }
     }
-    debugPrint("Seeded ${defaultSpices.length} official Navodya Spices items into Firestore database.");
+
+    int addedCount = 0;
+    for (var spice in defaultSpices) {
+      if (overwrite || !existingIds.contains(spice.id)) {
+        await saveProduct(spice);
+        addedCount++;
+      }
+    }
+    debugPrint("Seeded $addedCount official Navodya Spices items into Firestore database.");
   }
 
-  Future<void> seedInitialBanners() async {
+  Future<void> seedInitialBanners({bool overwrite = false}) async {
     final defaultBanners = [
       BannerModel(
         id: 'BAN-101',
@@ -586,8 +600,20 @@ class FirebaseService {
       ),
     ];
 
+    Set<String> existingBannerIds = {};
+    if (!overwrite) {
+      try {
+        final existingSnap = await FirebaseFirestore.instance.collection('banners').get();
+        existingBannerIds = existingSnap.docs.map((doc) => doc.id).toSet();
+      } catch (e) {
+        debugPrint("Error checking existing banners: $e");
+      }
+    }
+
     for (var b in defaultBanners) {
-      await saveBanner(b);
+      if (overwrite || !existingBannerIds.contains(b.id)) {
+        await saveBanner(b);
+      }
     }
     debugPrint("Seeded initial promo hero banners into Firestore database.");
   }

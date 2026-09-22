@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/app_provider.dart';
-import '../models/user_model.dart';
 import '../theme/app_theme.dart';
 import '../widgets/common/app_logo_header.dart';
 import '../widgets/storefront/customer_checkout_modal.dart';

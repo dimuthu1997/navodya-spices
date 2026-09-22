@@ -741,12 +741,12 @@ class AppProvider with ChangeNotifier {
   }
 
   // Seed Default Spices & Hero Banners directly into Firebase Firestore DB
-  Future<void> seedFirestoreCatalog() async {
+  Future<void> seedFirestoreCatalog({bool overwrite = false}) async {
     _isLoading = true;
     notifyListeners();
 
-    await _firebaseService.seedInitialSpicesCatalog();
-    await _firebaseService.seedInitialBanners();
+    await _firebaseService.seedInitialSpicesCatalog(overwrite: overwrite);
+    await _firebaseService.seedInitialBanners(overwrite: overwrite);
 
     _isLoading = false;
     notifyListeners();

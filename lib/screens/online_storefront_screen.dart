@@ -402,12 +402,12 @@ class OnlineStorefrontScreen extends StatelessWidget {
                         ),
                       ),
                       onPressed: () async {
-                        await appProvider.seedFirestoreCatalog();
+                        await appProvider.seedFirestoreCatalog(overwrite: false);
                         if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text(
-                                '⚡ Initial Spice Catalog successfully loaded!',
+                                '⚡ Spice catalog synced! (Existing items & price updates preserved)',
                               ),
                               backgroundColor: AppTheme.cardamomGreen,
                             ),
