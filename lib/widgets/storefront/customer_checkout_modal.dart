@@ -56,7 +56,10 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
     final notes = _notesController.text.trim();
 
     if (name.isEmpty || phone.isEmpty || address.isEmpty) {
-      setState(() => _errorMessage = 'Please enter your Full Name, Phone Number, and Delivery Address.');
+      setState(
+        () => _errorMessage =
+            'Please enter your Full Name, Phone Number, and Delivery Address.',
+      );
       return;
     }
 
@@ -84,8 +87,15 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
     }
   }
 
-  void _showOrderSuccessDialog(BuildContext context, AppProvider provider, OrderModel order) {
-    final currencyFormatter = NumberFormat.currency(symbol: 'Rs. ', decimalDigits: 2);
+  void _showOrderSuccessDialog(
+    BuildContext context,
+    AppProvider provider,
+    OrderModel order,
+  ) {
+    final currencyFormatter = NumberFormat.currency(
+      symbol: 'Rs. ',
+      decimalDigits: 2,
+    );
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -103,17 +113,28 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                   color: AppTheme.cardamomGreen.withValues(alpha: 0.15),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.check_circle, size: 54, color: AppTheme.cardamomGreen),
+                child: const Icon(
+                  Icons.check_circle,
+                  size: 54,
+                  color: AppTheme.cardamomGreen,
+                ),
               ),
               const SizedBox(height: 16),
               const Text(
                 'ORDER PLACED SUCCESSFULLY!',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, letterSpacing: 0.5),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 0.5,
+                ),
               ),
               const SizedBox(height: 6),
               Text(
                 'Firebase Order ID: ${order.id}',
-                style: const TextStyle(fontWeight: FontWeight.bold, color: AppTheme.royalGoldPrimary),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: AppTheme.royalGoldPrimary,
+                ),
               ),
               const SizedBox(height: 12),
               Container(
@@ -128,16 +149,35 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Amount Paid:', style: TextStyle(fontSize: 13)),
-                        Text(currencyFormatter.format(order.totalAmount), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                        const Text(
+                          'Amount Paid:',
+                          style: TextStyle(fontSize: 13),
+                        ),
+                        Text(
+                          currencyFormatter.format(order.totalAmount),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                        ),
                       ],
                     ),
                     const SizedBox(height: 4),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Payment Method:', style: TextStyle(fontSize: 13)),
-                        Text(order.paymentMethod, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppTheme.cardamomGreen)),
+                        const Text(
+                          'Payment Method:',
+                          style: TextStyle(fontSize: 13),
+                        ),
+                        Text(
+                          order.paymentMethod,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                            color: AppTheme.cardamomGreen,
+                          ),
+                        ),
                       ],
                     ),
                     const SizedBox(height: 4),
@@ -145,24 +185,69 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text('Est. Delivery:', style: TextStyle(fontSize: 13)),
-                        Text('1 - 2 Business Days', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppTheme.saffronPrimary)),
+                        Text(
+                          '1 - 2 Business Days',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                            color: AppTheme.saffronPrimary,
+                          ),
+                        ),
                       ],
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
+
+              // Direct WhatsApp Dispatch Button
+              SizedBox(
+                width: double.infinity,
+                height: 46,
+                child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppTheme.whatsappGreen,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                  ),
+                  onPressed: () => provider.dispatchWhatsAppOrder(order),
+                  icon: const Icon(
+                    Icons.phone_android,
+                    color: Colors.white,
+                    size: 18,
+                  ),
+                  label: const Text(
+                    'SEND ORDER TO WHATSAPP (0702308303)',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 14),
+
               Row(
                 children: [
                   Expanded(
                     child: OutlinedButton.icon(
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 12),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
                       ),
                       onPressed: () => Navigator.pop(ctx),
                       icon: const Icon(Icons.shopping_bag_outlined, size: 16),
-                      label: const Text('Continue Shopping', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                      label: const Text(
+                        'Continue Shopping',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -171,14 +256,27 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppTheme.royalGoldPrimary,
                         padding: const EdgeInsets.symmetric(vertical: 12),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
                       ),
                       onPressed: () {
                         Navigator.pop(ctx);
-                        provider.setNavIndex(3); // Navigate to Order History screen
+                        provider.setNavIndex(3);
                       },
-                      icon: const Icon(Icons.history, color: Colors.white, size: 16),
-                      label: const Text('Track Order', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)),
+                      icon: const Icon(
+                        Icons.history,
+                        color: Colors.white,
+                        size: 16,
+                      ),
+                      label: const Text(
+                        'Track Order',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -194,12 +292,17 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
   Widget build(BuildContext context) {
     final provider = Provider.of<AppProvider>(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final currencyFormatter = NumberFormat.currency(symbol: 'Rs. ', decimalDigits: 2);
+    final currencyFormatter = NumberFormat.currency(
+      symbol: 'Rs. ',
+      decimalDigits: 2,
+    );
     // final remainingForFreeDelivery = (provider.freeShippingThreshold - provider.subtotal).clamp(0.0, double.infinity);
 
     if (provider.currentUser != null) {
-      if (_nameController.text.isEmpty) _nameController.text = provider.currentUser!.name;
-      if (_emailController.text.isEmpty) _emailController.text = provider.currentUser!.email;
+      if (_nameController.text.isEmpty)
+        _nameController.text = provider.currentUser!.name;
+      if (_emailController.text.isEmpty)
+        _emailController.text = provider.currentUser!.email;
     }
 
     final screenWidth = MediaQuery.of(context).size.width;
@@ -213,7 +316,9 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       child: Container(
         width: 580,
-        constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.9),
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.of(context).size.height * 0.9,
+        ),
         padding: EdgeInsets.all(isMobile ? 14 : 24),
         child: Column(
           children: [
@@ -224,7 +329,11 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                 Expanded(
                   child: Row(
                     children: [
-                      const Icon(Icons.shopping_cart_checkout, color: AppTheme.royalGoldPrimary, size: 24),
+                      const Icon(
+                        Icons.shopping_cart_checkout,
+                        color: AppTheme.royalGoldPrimary,
+                        size: 24,
+                      ),
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
@@ -262,13 +371,27 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                         decoration: BoxDecoration(
                           color: Colors.red.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(14),
-                          border: Border.all(color: Colors.red.withValues(alpha: 0.3)),
+                          border: Border.all(
+                            color: Colors.red.withValues(alpha: 0.3),
+                          ),
                         ),
                         child: Row(
                           children: [
-                            const Icon(Icons.error_outline, color: Colors.red, size: 18),
+                            const Icon(
+                              Icons.error_outline,
+                              color: Colors.red,
+                              size: 18,
+                            ),
                             const SizedBox(width: 8),
-                            Expanded(child: Text(_errorMessage, style: const TextStyle(color: Colors.red, fontSize: 12))),
+                            Expanded(
+                              child: Text(
+                                _errorMessage,
+                                style: const TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -279,11 +402,23 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                       children: [
                         Text(
                           'YOUR SELECTED ITEMS (${provider.cart.length})',
-                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: isDark ? Colors.grey.shade400 : Colors.grey.shade700),
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: isDark
+                                ? Colors.grey.shade400
+                                : Colors.grey.shade700,
+                          ),
                         ),
                         TextButton(
                           onPressed: () => provider.clearCart(),
-                          child: const Text('Clear All', style: TextStyle(color: Colors.redAccent, fontSize: 11)),
+                          child: const Text(
+                            'Clear All',
+                            style: TextStyle(
+                              color: Colors.redAccent,
+                              fontSize: 11,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -294,11 +429,16 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                         padding: const EdgeInsets.all(20),
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: isDark ? AppTheme.darkCard : Colors.grey.shade100,
+                          color: isDark
+                              ? AppTheme.darkCard
+                              : Colors.grey.shade100,
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: const Center(
-                          child: Text('Your shopping cart is empty.', style: TextStyle(color: Colors.grey)),
+                          child: Text(
+                            'Your shopping cart is empty.',
+                            style: TextStyle(color: Colors.grey),
+                          ),
                         ),
                       )
                     else
@@ -312,9 +452,13 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                           return Container(
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              color: isDark ? AppTheme.darkCard : Colors.grey.shade50,
+                              color: isDark
+                                  ? AppTheme.darkCard
+                                  : Colors.grey.shade50,
                               borderRadius: BorderRadius.circular(14),
-                              border: Border.all(color: Colors.grey.withValues(alpha: 0.15)),
+                              border: Border.all(
+                                color: Colors.grey.withValues(alpha: 0.15),
+                              ),
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -332,31 +476,50 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                                         errorBuilder: (_, __, ___) => Container(
                                           width: 48,
                                           height: 48,
-                                          color: AppTheme.royalGoldPrimary.withValues(alpha: 0.15),
-                                          child: const Icon(Icons.rice_bowl, size: 24, color: AppTheme.royalGoldPrimary),
+                                          color: AppTheme.royalGoldPrimary
+                                              .withValues(alpha: 0.15),
+                                          child: const Icon(
+                                            Icons.rice_bowl,
+                                            size: 24,
+                                            color: AppTheme.royalGoldPrimary,
+                                          ),
                                         ),
                                       ),
                                     ),
                                     const SizedBox(width: 12),
                                     Expanded(
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             item.spice.name,
-                                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13.5),
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 13.5,
+                                            ),
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                           if (item.spice.sinhalaName.isNotEmpty)
                                             Text(
                                               item.spice.sinhalaName,
-                                              style: const TextStyle(fontSize: 11.5, color: AppTheme.royalGoldPrimary, fontWeight: FontWeight.w600),
+                                              style: const TextStyle(
+                                                fontSize: 11.5,
+                                                color:
+                                                    AppTheme.royalGoldPrimary,
+                                                fontWeight: FontWeight.w600,
+                                              ),
                                             ),
                                           const SizedBox(height: 2),
                                           Text(
                                             '${currencyFormatter.format(item.unitPrice)} (${item.selectedUnit})',
-                                            style: TextStyle(fontSize: 11, color: isDark ? Colors.grey.shade400 : Colors.grey.shade600),
+                                            style: TextStyle(
+                                              fontSize: 11,
+                                              color: isDark
+                                                  ? Colors.grey.shade400
+                                                  : Colors.grey.shade600,
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -364,44 +527,82 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                                     const SizedBox(width: 8),
                                     Text(
                                       currencyFormatter.format(item.itemTotal),
-                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: AppTheme.royalGoldPrimary),
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                        color: AppTheme.royalGoldPrimary,
+                                      ),
                                     ),
                                   ],
                                 ),
                                 const SizedBox(height: 10),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       'Quantity:',
-                                      style: TextStyle(fontSize: 11.5, color: isDark ? Colors.grey.shade400 : Colors.grey.shade600),
+                                      style: TextStyle(
+                                        fontSize: 11.5,
+                                        color: isDark
+                                            ? Colors.grey.shade400
+                                            : Colors.grey.shade600,
+                                      ),
                                     ),
                                     Container(
                                       height: 32,
                                       decoration: BoxDecoration(
-                                        color: isDark ? Colors.grey.shade800 : Colors.grey.shade200,
+                                        color: isDark
+                                            ? Colors.grey.shade800
+                                            : Colors.grey.shade200,
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           IconButton(
-                                            icon: const Icon(Icons.remove, size: 16),
-                                            onPressed: () => provider.updateCartQuantity(item.spice, -1, unit: item.selectedUnit),
-                                            padding: const EdgeInsets.symmetric(horizontal: 6),
+                                            icon: const Icon(
+                                              Icons.remove,
+                                              size: 16,
+                                            ),
+                                            onPressed: () =>
+                                                provider.updateCartQuantity(
+                                                  item.spice,
+                                                  -1,
+                                                  unit: item.selectedUnit,
+                                                ),
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 6,
+                                            ),
                                             constraints: const BoxConstraints(),
                                           ),
                                           Padding(
-                                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 8,
+                                            ),
                                             child: Text(
                                               '${item.quantity}',
-                                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 13,
+                                              ),
                                             ),
                                           ),
                                           IconButton(
-                                            icon: const Icon(Icons.add, size: 16, color: AppTheme.royalGoldPrimary),
-                                            onPressed: () => provider.updateCartQuantity(item.spice, 1, unit: item.selectedUnit),
-                                            padding: const EdgeInsets.symmetric(horizontal: 6),
+                                            icon: const Icon(
+                                              Icons.add,
+                                              size: 16,
+                                              color: AppTheme.royalGoldPrimary,
+                                            ),
+                                            onPressed: () =>
+                                                provider.updateCartQuantity(
+                                                  item.spice,
+                                                  1,
+                                                  unit: item.selectedUnit,
+                                                ),
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 6,
+                                            ),
                                             constraints: const BoxConstraints(),
                                           ),
                                         ],
@@ -420,7 +621,13 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                     // SECTION 2: CUSTOMER CONTACT & DELIVERY DETAILS
                     Text(
                       'DELIVERY & CONTACT INFORMATION',
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: isDark ? Colors.grey.shade400 : Colors.grey.shade700),
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: isDark
+                            ? Colors.grey.shade400
+                            : Colors.grey.shade700,
+                      ),
                     ),
                     const SizedBox(height: 10),
                     TextField(
@@ -554,14 +761,22 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                     // SECTION 4: PAYMENT METHOD SELECTION
                     Text(
                       'PAYMENT METHOD',
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: isDark ? Colors.grey.shade400 : Colors.grey.shade700),
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: isDark
+                            ? Colors.grey.shade400
+                            : Colors.grey.shade700,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Container(
                       decoration: BoxDecoration(
                         color: isDark ? AppTheme.darkCard : Colors.grey.shade50,
                         borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: Colors.grey.withValues(alpha: 0.15)),
+                        border: Border.all(
+                          color: Colors.grey.withValues(alpha: 0.15),
+                        ),
                       ),
                       child: Column(
                         children: [
@@ -613,15 +828,29 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                           RadioListTile<String>(
                             title: const Row(
                               children: [
-                                Icon(Icons.phone_android, color: AppTheme.whatsappGreen, size: 18),
+                                Icon(
+                                  Icons.phone_android,
+                                  color: AppTheme.whatsappGreen,
+                                  size: 18,
+                                ),
                                 SizedBox(width: 8),
-                                Text('WhatsApp Direct Dispatch', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                                Text(
+                                  'WhatsApp Direct Dispatch',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                  ),
+                                ),
                               ],
                             ),
-                            subtitle: const Text('Send cart directly to WhatsApp 0702308303', style: TextStyle(fontSize: 11)),
+                            subtitle: const Text(
+                              'Send cart directly to WhatsApp 0702308303',
+                              style: TextStyle(fontSize: 11),
+                            ),
                             value: 'WhatsApp Direct',
                             groupValue: _paymentMethod,
-                            onChanged: (val) => setState(() => _paymentMethod = val!),
+                            onChanged: (val) =>
+                                setState(() => _paymentMethod = val!),
                           ),
                         ],
                       ),
@@ -640,7 +869,11 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                           ],
                         ),
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: AppTheme.royalGoldPrimary.withValues(alpha: 0.3)),
+                        border: Border.all(
+                          color: AppTheme.royalGoldPrimary.withValues(
+                            alpha: 0.3,
+                          ),
+                        ),
                       ),
                       child: Column(
                         children: [
@@ -648,7 +881,12 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text('Items Subtotal:'),
-                              Text(currencyFormatter.format(provider.subtotal), style: const TextStyle(fontWeight: FontWeight.bold)),
+                              Text(
+                                currencyFormatter.format(provider.subtotal),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ],
                           ),
                           if (provider.discountAmount > 0) ...[
@@ -656,12 +894,24 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text('Discount (${provider.appliedCouponCode ?? ""}):', style: const TextStyle(color: AppTheme.cardamomGreen)),
-                                Text('-${currencyFormatter.format(provider.discountAmount)}', style: const TextStyle(color: AppTheme.cardamomGreen, fontWeight: FontWeight.bold)),
+                                Text(
+                                  'Discount (${provider.appliedCouponCode ?? ""}):',
+                                  style: const TextStyle(
+                                    color: AppTheme.cardamomGreen,
+                                  ),
+                                ),
+                                Text(
+                                  '-${currencyFormatter.format(provider.discountAmount)}',
+                                  style: const TextStyle(
+                                    color: AppTheme.cardamomGreen,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ],
                             ),
                           ],
                           const SizedBox(height: 6),
+
                           /*
                           // Temporarily commented out delivery fee cost row
                           Row(
@@ -697,15 +947,24 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
                             ),
                           ],
                           */
-
                           const Divider(height: 20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text('GRAND TOTAL:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                              const Text(
+                                'GRAND TOTAL:',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                               Text(
                                 currencyFormatter.format(provider.grandTotal),
-                                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppTheme.royalGoldPrimary),
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppTheme.royalGoldPrimary,
+                                ),
                               ),
                             ],
                           ),
@@ -725,15 +984,30 @@ class _CustomerCheckoutModalState extends State<CustomerCheckoutModal> {
               child: ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppTheme.cardamomGreen,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
                 ),
-                onPressed: (_isSubmitting || provider.cart.isEmpty) ? null : () => _handleCompleteOrder(provider),
+                onPressed: (_isSubmitting || provider.cart.isEmpty)
+                    ? null
+                    : () => _handleCompleteOrder(provider),
                 icon: _isSubmitting
-                    ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
+                    ? const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        ),
+                      )
                     : const Icon(Icons.cloud_upload, color: Colors.white),
                 label: Text(
-                  _isSubmitting ? 'PLACING FIREBASE ORDER...' : 'CONFIRM & PLACE ORDER',
-                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
+                  _isSubmitting ? 'PLACING ORDER...' : 'CONFIRM & PLACE ORDER',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
                 ),
               ),
             ),

@@ -533,7 +533,7 @@ class AppProvider with ChangeNotifier {
   double get deliveryFee => 0.0; // Temporarily commented out Rs. 350 delivery fee
   double get grandTotal => (subtotal - discountAmount + deliveryFee).clamp(0.0, double.infinity);
 
-  // Auto Dispatch Order details to WhatsApp
+  // Auto Dispatch Order details to WhatsApp (0702308303)
   void dispatchWhatsAppOrder(OrderModel order) {
     try {
       final formatter = NumberFormat.currency(symbol: 'Rs. ', decimalDigits: 2);
@@ -542,15 +542,24 @@ class AppProvider with ChangeNotifier {
       buffer.writeln('-----------------------------------');
       buffer.writeln('*Order ID:* ${order.id}');
       buffer.writeln('*Customer Name:* ${order.customerName ?? "Guest Shopper"}');
+      if (order.customerPhone != null && order.customerPhone!.isNotEmpty) {
+        buffer.writeln('*Phone / WhatsApp:* ${order.customerPhone}');
+      }
+      if (order.deliveryAddress != null && order.deliveryAddress!.isNotEmpty) {
+        final fullAddress = order.city != null && order.city!.isNotEmpty
+            ? '${order.deliveryAddress}, ${order.city}'
+            : order.deliveryAddress;
+        buffer.writeln('*Delivery Address:* $fullAddress');
+      }
       if (order.notes != null && order.notes!.isNotEmpty) {
-        buffer.writeln('*Address/Notes:* ${order.notes}');
+        buffer.writeln('*Special Notes:* ${order.notes}');
       }
       buffer.writeln('*Payment Method:* ${order.paymentMethod}');
       buffer.writeln('-----------------------------------');
       buffer.writeln('*Spices Ordered:*');
 
       for (var item in order.items) {
-        buffer.writeln('• ${item.spice.name} (${item.spice.unit}) x${item.quantity} = ${formatter.format(item.itemTotal)}');
+        buffer.writeln('• ${item.spice.name} (${item.selectedUnit}) x${item.quantity} = ${formatter.format(item.itemTotal)}');
       }
 
       buffer.writeln('-----------------------------------');
@@ -560,14 +569,26 @@ class AppProvider with ChangeNotifier {
       }
       buffer.writeln('*GRAND TOTAL:* ${formatter.format(order.totalAmount)}');
 
-      final cleanWa = _whatsappNumber.replaceAll(RegExp(r'[^0-9]'), '');
+      final targetPhone = _whatsappNumber.isNotEmpty ? _whatsappNumber : '0702308303';
+      final cleanWa = targetPhone.replaceAll(RegExp(r'[^0-9]'), '');
       final countryWa = cleanWa.startsWith('0') ? '94${cleanWa.substring(1)}' : cleanWa;
       final encodedText = Uri.encodeComponent(buffer.toString());
-      final whatsappUrl = 'https://wa.me/$countryWa?text=$encodedText';
+      
+      // WhatsApp API URL compatible with Mobile App & Desktop Browsers
+      final whatsappUrl = 'https://api.whatsapp.com/send?phone=$countryWa&text=$encodedText';
 
-      web.window.open(whatsappUrl, '_blank');
+      if (kIsWeb) {
+        try {
+          final win = web.window.open(whatsappUrl, '_blank');
+          if (win == null) {
+            web.window.location.href = whatsappUrl;
+          }
+        } catch (_) {
+          web.window.location.href = whatsappUrl;
+        }
+      }
     } catch (e) {
-      debugPrint("WhatsApp dispatch note: $e");
+      debugPrint("WhatsApp dispatch error: $e");
     }
   }
 
